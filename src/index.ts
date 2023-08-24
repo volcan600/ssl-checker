@@ -35,6 +35,7 @@ const DEFAULT_OPTIONS: Partial<https.RequestOptions> = {
 
 const sslChecker = (
   host: string,
+  servername: string,
   options: Partial<https.RequestOptions> = {}
 ): Promise<IResolvedValues> =>
   new Promise((resolve, reject) => {
@@ -47,7 +48,7 @@ const sslChecker = (
 
     try {
       const req = https.request(
-        { host, ...options },
+        { host, servername, ...options },
         (res: http.IncomingMessage) => {
           const { valid_from, valid_to, subjectaltname } = (
             res.socket as TLSSocket
